@@ -4,11 +4,20 @@ import AuthService from '@src/services/AuthService';
 
 import { IReq, IRes } from './types/express/misc';
 
+
+// **** Types **** //
+
 interface ILoginReq {
   email: string;
   password: string;
 }
 
+
+// **** Functions **** //
+
+/**
+ * Login a user.
+ */
 async function login(req: IReq<ILoginReq>, res: IRes) {
   const { email, password } = req.body;
   // Login
@@ -24,6 +33,18 @@ async function login(req: IReq<ILoginReq>, res: IRes) {
   return res.status(HttpStatusCodes.OK).end();
 }
 
+/**
+ * Logout the user.
+ */
+function logout(_: IReq, res: IRes) {
+  SessionUtil.clearCookie(res);
+  return res.status(HttpStatusCodes.OK).end();
+}
+
+
+// **** Export default **** //
+
 export default {
   login,
+  logout,
 } as const;
